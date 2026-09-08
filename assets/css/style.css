@@ -151,6 +151,13 @@ main .intro {
 main .intro p { color: var(--color-muted); }
 main h1 { margin-bottom: var(--space-6); }
 
+/* === Donio widget (předprodej Ministerstva hub) === */
+.donio-embed {
+  max-width: var(--max-content);
+  margin-bottom: var(--space-8);
+}
+.donio-embed iframe { display: block; border: 0; }
+
 /* Dlouhé názvy básní — radši zmenšit, než rozlámat na dva řádky */
 .h1-tight { font-size: clamp(1.3rem, 0.9rem + 3vw, 2.5rem); }
 @media (min-width: 640px) {
