@@ -1,0 +1,22 @@
+.DS_Store
+node_modules/
+.env
+*.log
+
+# docs/ se buildí v GitHub Action, lokálně slouží jen pro npm run serve
+docs/
+
+# manuální export, nahrazen automatickým FTP deployem
+ondrapelikan-web.zip
+
+# nezpracované zdrojové podklady (fotky/videa/texty) — do repa jde jen
+# zpracovaný výstup v assets/, zdroje zůstávají jen lokálně
+/až jelen s laní útes slaní/
+/betonový chleby/
+/moje první auto/
+/Ministerstvo hub/
+/vánoční svícínek/
+/*.pages
+/*.mov
+/poezie teletext.png
+/Revolver revue 141_Pelikan.pdf
