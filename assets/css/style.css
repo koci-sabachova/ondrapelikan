@@ -150,6 +150,8 @@ main .intro {
 }
 main .intro p { color: var(--color-muted); }
 main h1 { margin-bottom: var(--space-6); }
+main article h2 { margin-top: var(--space-10); margin-bottom: var(--space-4); }
+main article h2:first-child { margin-top: 0; }
 
 /* === Donio widget (předprodej Ministerstva hub) === */
 .donio-embed {
@@ -322,8 +324,6 @@ main h1 { margin-bottom: var(--space-6); }
 }
 .poem + .poem {
   margin-top: var(--space-8);
-  padding-top: var(--space-8);
-  border-top: 1px solid var(--color-rule);
 }
 
 /* === Biografie === */

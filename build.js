@@ -28,6 +28,7 @@ const MENU = [
   ] },
   { type: 'group', slug: 'poezie', label: 'Poezie', items: [
     { type: 'page', slug: 'ministerstvo-hub', label: 'Ministerstvo hub, 2026' },
+    { type: 'page', slug: 'mezi-stromy-fest-2026', label: 'Mezi stromy fest, Milevsko 2026' },
     { type: 'page', slug: 'revolver-revue-141', label: 'Revolver Revue 141, 2025' },
     { type: 'page', slug: 'teletext-ct', label: 'Teletext ČT, 2024' },
     { type: 'page', slug: 'mac-brno-2026', label: 'MAČ Brno 2026' },
