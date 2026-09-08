@@ -150,8 +150,16 @@ main .intro {
 }
 main .intro p { color: var(--color-muted); }
 main h1 { margin-bottom: var(--space-6); }
-main article h2 { margin-top: var(--space-10); margin-bottom: var(--space-4); }
-main article h2:first-child { margin-top: 0; }
+/* Nadpisy jednotlivých básní na stránce s víc básněmi (MAČ Brno, Mezi
+   stromy fest) — stejný vzhled jako "Lež tady" u Matko dej mi chlast
+   (.wedding__poem-title v 13Ř): jen o stupeň větší tučné písmo, žádný
+   velký nadpisový blok. */
+.poem-title {
+  font-size: var(--fs-h3);
+  font-weight: 700;
+  margin: var(--space-10) 0 var(--space-4);
+}
+.poem-title:first-child { margin-top: 0; }
 
 /* === Donio widget (předprodej Ministerstva hub) === */
 .donio-embed {
