@@ -55,8 +55,6 @@ jobs:
           node-version: 20
       - run: npm run build
         working-directory: ondrapelikan
-      - name: Zjistit veřejnou IP a zemi runneru (diagnostika FTP bloku)
-        run: curl -s https://ipinfo.io | tee /tmp/runner-ip.json
       - uses: SamKirkland/FTP-Deploy-Action@v4.3.5
         with:
           server: ftpx.forpsi.com
@@ -64,3 +62,4 @@ jobs:
           password: ${{ secrets.FTP_PASSWORD }}
           local-dir: ./ondrapelikan/docs/
           server-dir: /www/
+          timeout: 300000
