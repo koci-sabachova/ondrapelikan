@@ -12,8 +12,26 @@ document.querySelectorAll('.js-mail').forEach((el) => {
   el.textContent = email;
 });
 
+// Mobilní menu — hamburger schová/zobrazí levý side-nav (na desktopu
+// je nav-toggle přes CSS skrytý, tam menu jede jako dřív)
+const navToggle = document.querySelector('.nav-toggle');
+const sideNav = document.getElementById('side-nav');
+if (navToggle && sideNav) {
+  const closeNav = () => {
+    sideNav.classList.remove('is-open');
+    navToggle.setAttribute('aria-expanded', 'false');
+  };
+  navToggle.addEventListener('click', () => {
+    const isOpen = sideNav.classList.toggle('is-open');
+    navToggle.setAttribute('aria-expanded', String(isOpen));
+  });
+  sideNav.querySelectorAll('a').forEach((a) => a.addEventListener('click', closeNav));
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') closeNav();
+  });
+}
+
 // Galerie — lightbox s navigací šipkami a focus trapem
-// (menu vlevo je čisté <details>/<summary>, žádné JS nepotřebuje)
 const galleryItems = document.querySelectorAll('.gallery__item[data-full]');
 const lightbox = document.getElementById('lightbox');
 if (galleryItems.length && lightbox) {

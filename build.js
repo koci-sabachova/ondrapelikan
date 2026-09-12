@@ -235,7 +235,7 @@ for (const file of pages) {
     '<body>',
     header,
     '<div class="shell">',
-    `<nav class="side-nav" aria-label="Hlavní menu">`,
+    `<nav id="side-nav" class="side-nav" aria-label="Hlavní menu">`,
     `<ul>\n${navHtml}\n</ul>`,
     `</nav>`,
     '<main id="main">',

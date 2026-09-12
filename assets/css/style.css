@@ -52,6 +52,9 @@ img { max-width: 100%; display: block; }
 
 /* === Site header — jen logo, žádná fotka === */
 .site-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
   padding: var(--space-5) var(--space-5) 0;
 }
 .site-header__brand {
@@ -68,6 +71,22 @@ img { max-width: 100%; display: block; }
 }
 @media (min-width: 900px) {
   .site-header { padding: var(--space-6) var(--space-8) 0; }
+}
+
+/* Hamburger — jen na mobilu, na desktopu je menu vždy vidět vlevo */
+.nav-toggle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: none;
+  border: none;
+  padding: var(--space-2);
+  margin: calc(var(--space-2) * -1);
+  color: var(--color-ink);
+  cursor: pointer;
+}
+@media (min-width: 900px) {
+  .nav-toggle { display: none; }
 }
 
 /* === Shell: levé menu + obsah === */
@@ -93,6 +112,15 @@ img { max-width: 100%; display: block; }
    top-levelu stejný formát textu, podpoložky jsou pod nimi trvale vidět. */
 .side-nav {
   flex: 0 0 var(--nav-width);
+}
+/* Na mobilu je menu schované za hamburgerem, na desktopu vždy vidět */
+@media (max-width: 899px) {
+  .side-nav { display: none; }
+  .side-nav.is-open {
+    display: block;
+    padding-bottom: var(--space-4);
+    border-bottom: 1px solid var(--color-rule);
+  }
 }
 .side-nav > ul {
   list-style: none;
