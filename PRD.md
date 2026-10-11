@@ -42,21 +42,21 @@ Objekty
   ├─ Betonové chleby, 2014–
   ├─ Vodňanské kuře, 2015
   ├─ Vánoční svícínek, 2024
-  └─ Hole, 2024–
+  ├─ Hole, 2024–
+  └─ Choroše, 2025– (platební/magnetický/betonový choroš, vlastní podsekce na jedné stránce)
 Poezie
   ├─ Ministerstvo hub, 2026
   ├─ Revolver Revue 141, 2025
   ├─ Teletext ČT, 2024
   ├─ MAČ Brno 2026 (několik básní na jedné stránce, jen některé titulkované)
   ├─ Matko dej mi chlast, 2026
-  └─ Tohle musíš udělat co nejdřív, 2024
+  ├─ Tohle musíš udělat co nejdřív, 2024
+  └─ Vše zdarma hned!, 2026
 Zvuk a performance
 Třináct řemesel  (vlastní stránka s fotkou + textem + odkazem na trinactremesel.cz)
 Biografie
 Kontakt
 ```
-
-Mimo menu (neveřejné, `noindex`, čeká na spuštění k vernisáži): **Vše zdarma hned!** na `/vse/` — po spuštění přejmenovat na `/vse-zdarma-hned/` a zařadit do Poezie, viz §4.
 
 *(Zkoušená a zase smazaná: „Mezi stromy fest, Milevsko 2026" — celý přepis autorského čtení, na přání odstraněno bez náhrady.)*
 
@@ -100,8 +100,12 @@ Zdroj fotek: **chybí složka** — nedodáno.
 Zdroj: `vánoční svícínek/` (1 foto + 1 video) — **hotovo, obsah se neřeší dál**. Foto a video stejně široké pod sebou.
 
 **Hole, 2024–**
-> Z různých dřevin různé hole. Kolekci kraluje hůl z divizny velkokvěté. Hole pro svědky svatby, hole pro hříšníky svatby, hůl hospodářská (1 m dlouhá), hůl poutnická a mnoho dalších.
-Zdroj: **chybí složka** — nedodáno.
+> Tisíce let starý artefakt, který prostupuje všemi kulturami světa. Tři podsekce na jedné stránce: **Diviznová hůl** (vyrobená z divizny velkokvěté, hlava vylitá cínem), **Hole pro svědky svatby** (šest dřevin pro šest svědků), **Hůl zla s protilólem** (pár: zlá hůl z různých nechutných materiálů + hebká javorová).
+Zdroj: `zasilka-WR7J7I93ZIG7UHRE/text hole web.pages` + `Archive/` (3 podsložky) — hotovo, nasazeno do `assets/img/hole/`. Další díla v plánu (roubovaná, obytná, z vajglů, alkoholikům, golfová, s power bankou, platební, solární, obchodním centrům, mluvící…) zatím nepublikovat.
+
+**Choroše, 2025–**
+> Zpracovávám houbu, tzv. choroš, troudnatec kopytovitý, k různým účelům. Tři podsekce na jedné stránce: **Platební choroš** (zamaskovaná platební nálepka), **Magnetický choroš**, **Betonový choroš** (odlitek do silikonové formy s vrutem, odpověď na etiku sběru chorošů).
+Zdroj: `zasilka-WR7J7I93ZIG7UHRE/chorose/` (text z `.pages`, fotky ve 3 podsložkách) — hotovo, nasazeno do `assets/img/chorose/`.
 
 ### Poezie
 
@@ -133,24 +137,22 @@ Titulní fotka (Ondřej na židli) z 13Ř + text: *„Při umění člověk odpo
 > Od 2024 píše poezii a věnuje se více objektům než fotografii.
 > 2025 přijímá řemesla a začíná dělat kurzy všeho.
 
-## 4. Vše zdarma hned! — Galerie Výhybka (rozpracováno)
+## 4. Vše zdarma hned! — Galerie Výhybka
 
 Literární intervence na LED obrazovku v obchodní zóně v Milevsku, říjen–listopad 2026, ve spolupráci s Galerií Výhybka (`galerie.vyhybka.art`). QR kód z reklamy vede na `/vse-zdarma-hned/`.
 
-- Zdroj `_pages/vse.html` — zatím na neveřejné URL `/vse/` (`robots: noindex`, mimo `MENU`), kvůli konzultaci s kurátorkou před spuštěním.
+- Spuštěno: `_pages/vse-zdarma-hned.html`, zařazeno do `MENU` (Poezie) v `build.js`, bez `noindex`.
 - Text + logo Galerie Výhybka (prolinkované, `assets/img/vse-zdarma-hned/logo/`) + odkaz na jejich FB hotové. Poděkování je až pod fotkami.
-- Galerie 4 fotek zatím jen placeholdery (`placeholderCount: 4`) — fotky ještě nedodané, po vložení do `assets/img/vse-zdarma-hned/` (mimo `logo/`) se automaticky zobrazí místo placeholderů.
-- **K vernisáži** (polovina října, datum se ladí): přejmenovat `vse.html` → `vse-zdarma-hned.html`, přidat do `MENU` (Poezie) v `build.js`, odebrat `robots: noindex`.
+- Galerie: 6 fotek v `assets/img/vse-zdarma-hned/` (`vis-01.jpg`–`vis-06.jpg`). Doplní se fotky z vernisáže 25. 10.
 
 ---
 
 ## 5. Otevřené otázky
 
-1. Chybí materiál: Vodňanské kuře, Hole.
+1. Chybí materiál: Vodňanské kuře.
 2. Video soubory (`.mov`) potřebují kompresi/transkód (H.264/WebM) — vyřešeno, viz §6.
 3. Přesný layout stránky díla (grid vs. jedna fotka pod druhou) — zatím jen „galerie stejná jako na 13ř".
-4. Fotky pro „Vše zdarma hned!" (4 ks) — zatím nedodané, viz §4.
-5. Datum vernisáže Galerie Výhybka (polovina října 2026) — zatím se ladí, spuštění `/vse-zdarma-hned/` na něj čeká.
+4. Fotky z vernisáže Galerie Výhybka (25. 10. 2026) — doplní se do `/vse-zdarma-hned/`, viz §4.
 
 ---
 
@@ -163,10 +165,11 @@ Stejně jako `13remesel`: vanilla HTML/CSS/JS, žádný framework, žádné záv
 - `npm run build` → generuje `docs/`
 - `npm run serve` → lokální náhled (pozor na kolizi portu 8000 s `13remesel` — používat jiný port, např. 8001)
 - Skutečné fotky nasazené: Až jelen s laní útes slaní (102), Moje první auto (29), Betonové chleby (11 — nevytříděno)
-- Placeholdery: Vodňanské kuře, Hole, Třináct řemesel (titulní foto), Vše zdarma hned! (4 fotky — viz §4)
+- Placeholdery: Vodňanské kuře, Třináct řemesel (titulní foto)
 - Texty **Matko dej mi chlast** (báseň *Lež tady*) a **Tohle musíš udělat co nejdřív** se v `build.js` natahují přímo ze souborů v `13remesel` (`texty/03-trinacte-remeslo.md`, `_pages/svatba.html`) — jediný zdroj pravdy, žádné ruční kopírování. Pozor: build ondrapelikan.cz proto závisí na tom, že repo `13remesel` leží vedle (`../13remesel`).
 - Videa zkomprimovaná (ffmpeg, H.264/AAC, `-movflags +faststart`): `zvuk a performance.mov` 68→15 MB, `IMG_5951.mov` 158→26 MB (škálováno na 1280 px šířky), `vanocni-svicinek` 66→13 MB. Originální `.mov` v `assets/` nahrazeny `.mp4`, zdrojové soubory v kořeni projektu nedotčené.
-- Homepage má nad titulní fotkou blok o předprodeji knihy **Ministerstvo hub** na Donio (text + `<iframe>` widget, `#donio.cz/widget2/41628`).
+- Blok o předprodeji knihy **Ministerstvo hub** na Donio (text + `<iframe>` widget, `donio.cz/widget2/41628`) je na stránce `/ministerstvo-hub/`, nad galerií. Homepage má jen titulní fotku.
+- **Vše zdarma hned!** spuštěno na `/vse-zdarma-hned/` v menu (Poezie), 6 fotek nasazeno.
 - **Mobilní menu:** hamburger v headeru (viz §2) — na mobilu se dřív muselo scrollovat přes celé rozbalené menu, než začal obsah.
 
 ### Deploy a hosting

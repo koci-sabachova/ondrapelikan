@@ -25,6 +25,7 @@ const MENU = [
     { type: 'page', slug: 'vodnanske-kure', label: 'Vodňanské kuře, 2015' },
     { type: 'page', slug: 'vanocni-svicinek', label: 'Vánoční svícínek, 2024' },
     { type: 'page', slug: 'hole', label: 'Hole, 2024–' },
+    { type: 'page', slug: 'chorose', label: 'Choroše, 2025–' },
   ] },
   { type: 'group', slug: 'poezie', label: 'Poezie', items: [
     { type: 'page', slug: 'ministerstvo-hub', label: 'Ministerstvo hub, 2026' },
@@ -33,6 +34,7 @@ const MENU = [
     { type: 'page', slug: 'mac-brno-2026', label: 'MAČ Brno 2026' },
     { type: 'page', slug: 'matko-dej-mi-chlast', label: 'Matko dej mi chlast, 2026' },
     { type: 'page', slug: 'tohle-musis-udelat-co-nejdriv', label: 'Tohle musíš udělat co nejdřív, 2024' },
+    { type: 'page', slug: 'vse-zdarma-hned', label: 'Vše zdarma hned!, 2026' },
   ] },
   { type: 'page', slug: 'zvuk-a-performance', label: 'Zvuk a performance' },
   { type: 'page', slug: 'trinact-remesel', label: 'Třináct řemesel' },
@@ -222,7 +224,17 @@ for (const file of pages) {
   const poem = slug === 'tohle-musis-udelat-co-nejdriv' ? poemFromTrinacteRemeslo()
     : slug === 'matko-dej-mi-chlast' ? poemLezTady()
     : '';
-  const vars = { ...defaults, ...meta, gallery, poem };
+  // Choroše: tři podsekce (platební/magnetický/betonový), každá s vlastní galerií
+  const galleryPlatebniChoros = slug === 'chorose' ? buildGallery('chorose/platebni', 'Platební choroš') : '';
+  const galleryMagnetickyChoros = slug === 'chorose' ? buildGallery('chorose/magneticky', 'Magnetický choroš') : '';
+  // Hole: tři podsekce (diviznová / pro svědky svatby / zla), každá s vlastní galerií
+  const galleryDiviznova = slug === 'hole' ? buildGallery('hole/diviznova', 'Diviznová hůl') : '';
+  const gallerySvedciSvatby = slug === 'hole' ? buildGallery('hole/svedci-svatby', 'Hole pro svědky svatby') : '';
+  const gallerySvedciSvatbyDetail = slug === 'hole' ? buildGallery('hole/svedci-svatby-detail', 'Hole pro svědky svatby') : '';
+  const galleryZla1 = slug === 'hole' ? buildGallery('hole/zla-1', 'Hůl zla s protilólem') : '';
+  const galleryZla2 = slug === 'hole' ? buildGallery('hole/zla-2', 'Hůl zla s protilólem') : '';
+  const galleryZla3 = slug === 'hole' ? buildGallery('hole/zla-3', 'Hůl zla s protilólem') : '';
+  const vars = { ...defaults, ...meta, gallery, poem, galleryPlatebniChoros, galleryMagnetickyChoros, galleryDiviznova, gallerySvedciSvatby, gallerySvedciSvatbyDetail, galleryZla1, galleryZla2, galleryZla3 };
 
   const navHtml = renderMenu(MENU, activeSlug);
 
