@@ -5,6 +5,7 @@ import {
 } from 'node:fs';
 import { join, basename, extname } from 'node:path';
 import { execFileSync } from 'node:child_process';
+import { load as parseYaml } from 'js-yaml';
 
 const ROOT = process.cwd();
 const PAGES = join(ROOT, '_pages');
@@ -62,12 +63,24 @@ ${renderMenu(node.items, activeSlug, depth + 1)}
 function parseFrontMatter(src) {
   const m = src.match(/^<!--meta\s*([\s\S]*?)-->\s*/);
   if (!m) return { meta: {}, body: src };
-  const meta = {};
-  for (const line of m[1].split('\n')) {
-    const kv = line.match(/^\s*([a-zA-Z][a-zA-Z0-9_-]*)\s*:\s*(.*?)\s*$/);
-    if (kv) meta[kv[1]] = kv[2];
-  }
+  const meta = parseYaml(m[1]) || {};
   return { meta, body: src.slice(m[0].length) };
+}
+
+// Pro "jednoduché" stránky (titulek + rok + odstavce textu + volitelná
+// galerie fotek) z /admin CMS — Ondřej vyplní pole bez HTML, tahle funkce
+// z nich postaví stejné markup jako ruční stránky. Pokud stránka obsahuje
+// vlastní ruční HTML v těle souboru (bespoke layout jako Choroše/Hole),
+// má přednost a tahle funkce se nepoužije (viz volání níž).
+function renderSimpleBody(meta) {
+  const paragraphs = (meta.paragraphs || []).filter(Boolean);
+  const introLines = [`    <h1>${meta.title || ''}</h1>`];
+  if (meta.year) introLines.push(`    <p>${meta.year}</p>`);
+  for (const p of paragraphs) introLines.push(`    <p>${p}</p>`);
+  const gallery = meta.gallerySlug
+    ? `\n  <ul class="gallery">\n{{gallery}}\n  </ul>`
+    : '';
+  return `<article>\n  <div class="intro">\n${introLines.join('\n')}\n  </div>${gallery}\n</article>`;
 }
 
 function template(str, vars) {
@@ -235,6 +248,12 @@ for (const file of pages) {
   const galleryZla2 = slug === 'hole' ? buildGallery('hole/zla-2', 'Hůl zla s protipólem') : '';
   const galleryZla3 = slug === 'hole' ? buildGallery('hole/zla-3', 'Hůl zla s protipólem') : '';
   const vars = { ...defaults, ...meta, gallery, poem, galleryPlatebniChoros, galleryMagnetickyChoros, galleryDiviznova, gallerySvedciSvatby, gallerySvedciSvatbyDetail, galleryZla1, galleryZla2, galleryZla3 };
+  // Stránky vyplněné přes /admin jako "jednoduché" (titulek/rok/odstavce
+  // místo ručního HTML) nemají vlastní tělo — postaví se z front matteru.
+  // Ruční HTML v souboru (bespoke stránky) má vždy přednost.
+  const effectiveBody = (!body.trim() && meta.paragraphs && meta.paragraphs.length)
+    ? renderSimpleBody(meta)
+    : body;
 
   const navHtml = renderMenu(MENU, activeSlug);
 
@@ -251,7 +270,7 @@ for (const file of pages) {
     `<ul>\n${navHtml}\n</ul>`,
     `</nav>`,
     '<main id="main">',
-    template(body, vars),
+    template(effectiveBody, vars),
     '</main>',
     '</div>',
     footer,

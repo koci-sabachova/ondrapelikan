@@ -36,6 +36,13 @@ collections:
           - { label: "Samostatná položka (dole pod skupinami)", value: "standalone" }
       - { label: "Text v menu", name: "menuLabel", widget: "string", required: false, hint: "Např. „Hole, 2024–“. Když necháš prázdné, použije se Titulek." }
       - { label: "Pořadí v menu (menší číslo = výš)", name: "menuOrder", widget: "number", required: false, default: 9 }
+      - { label: "Rok", name: "year", widget: "string", required: false, hint: "Např. '2024' nebo '2024–', pokud dílo ještě pokračuje." }
+      - label: "Text — odstavce"
+        name: "paragraphs"
+        widget: "list"
+        required: false
+        hint: "Každý odstavec jako nová položka — žádné HTML tagy, jen prostý text."
+        field: { label: "Odstavec", name: "text", widget: "text" }
       - label: "Galerie fotek — název složky"
         name: "gallerySlug"
         widget: "string"
@@ -48,23 +55,14 @@ collections:
         media_folder: "/assets/img"
         public_folder: "/assets/img"
         hint: "V nahrávacím okně otevři/vytvoř podsložku se stejným názvem jako pole 'Galerie fotek' výš a tam fotku nahraj."
-      - label: "Obsah stránky (HTML)"
+      - label: "Pokročilé — vlastní HTML (jen pro netypické stránky)"
         name: "body"
         widget: "code"
+        required: false
         default_language: "html"
         allow_language_selection: false
         output_code_only: true
-        default: |
-          <article>
-            <div class="intro">
-              <h1>Název díla</h1>
-              <p>2026</p>
-              <p>Krátký popis díla.</p>
-            </div>
-            <ul class="gallery">
-          {{gallery}}
-            </ul>
-          </article>
+        hint: "Nech prázdné — stránka se postaví sama z polí výš (Rok, Odstavce, Galerie). Vyplň jen pokud potřebuješ něco, co tahle pole neumí (má to přednost před nimi)."
       - { name: "bookPreviewSlug", widget: "hidden", required: false }
       - { name: "placeholderCount", widget: "hidden", required: false }
       - { name: "robots", widget: "hidden", required: false }
