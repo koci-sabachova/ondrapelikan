@@ -13,34 +13,27 @@ const ASSETS = join(ROOT, 'assets');
 const DIST = join(ROOT, 'docs');
 const SITE_URL = 'https://ondrapelikan.cz';
 
-// === Menu strom — jediný zdroj pravdy pro levé rozklikávací menu ===
-// type: 'group' (rozbaluje se, sama není stránka), 'page' (vlastní stránka bez rozbalení), 'link' (externí)
-const MENU = [
-  { type: 'group', slug: 'fotografie', label: 'Fotografie', items: [
-    { type: 'page', slug: 'az-jelen-s-lani-utes-slani', label: 'Až jelen s laní útes slaní, 2010–2025' },
-    { type: 'page', slug: 'moje-prvni-auto', label: 'Moje první auto, 2018' },
-  ] },
-  { type: 'group', slug: 'objekty', label: 'Objekty', items: [
-    { type: 'page', slug: 'betonove-chleby', label: 'Betonové chleby, 2014–' },
-    { type: 'page', slug: 'vodnanske-kure', label: 'Vodňanské kuře, 2015' },
-    { type: 'page', slug: 'vanocni-svicinek', label: 'Vánoční svícínek, 2024' },
-    { type: 'page', slug: 'hole', label: 'Hole, 2024–' },
-    { type: 'page', slug: 'chorose', label: 'Choroše, 2025–' },
-  ] },
-  { type: 'group', slug: 'poezie', label: 'Poezie', items: [
-    { type: 'page', slug: 'ministerstvo-hub', label: 'Ministerstvo hub, 2026' },
-    { type: 'page', slug: 'revolver-revue-141', label: 'Revolver Revue 141, 2025' },
-    { type: 'page', slug: 'teletext-ct', label: 'Teletext ČT, 2024' },
-    { type: 'page', slug: 'mac-brno-2026', label: 'MAČ Brno 2026' },
-    { type: 'page', slug: 'matko-dej-mi-chlast', label: 'Matko dej mi chlast, 2026' },
-    { type: 'page', slug: 'tohle-musis-udelat-co-nejdriv', label: 'Tohle musíš udělat co nejdřív, 2024' },
-    { type: 'page', slug: 'vse-zdarma-hned', label: 'Vše zdarma hned!, 2026' },
-  ] },
-  { type: 'page', slug: 'zvuk-a-performance', label: 'Zvuk a performance' },
-  { type: 'page', slug: 'trinact-remesel', label: 'Třináct řemesel' },
-  { type: 'page', slug: 'biografie', label: 'Bio' },
-  { type: 'page', slug: 'kontakt', label: 'Kontakt' },
+// === Menu strom ===
+// Pořadí skupin (a pořadí samostatných položek za nimi) je designové
+// rozhodnutí, zůstává napevno v kódu. Obsah skupin se ale skládá z
+// front matteru jednotlivých stránek (menuGroup/menuLabel/menuOrder) —
+// nová stránka v _pages/ (třeba přes /admin CMS) se tak sama zařadí do
+// menu, bez zásahu sem.
+const MENU_GROUPS = [
+  { slug: 'fotografie', label: 'Fotografie' },
+  { slug: 'objekty', label: 'Objekty' },
+  { slug: 'poezie', label: 'Poezie' },
 ];
+
+function buildMenu(pageMetas) {
+  const itemsFor = (group) => pageMetas
+    .filter((p) => p.meta.menuGroup === group)
+    .sort((a, b) => (parseFloat(a.meta.menuOrder) || 99) - (parseFloat(b.meta.menuOrder) || 99))
+    .map((p) => ({ type: 'page', slug: p.slug, label: p.meta.menuLabel || p.meta.title }));
+
+  const groups = MENU_GROUPS.map((g) => ({ type: 'group', slug: g.slug, label: g.label, items: itemsFor(g.slug) }));
+  return [...groups, ...itemsFor('standalone')];
+}
 
 // Plochý, vždy rozbalený seznam (žádný accordion) — všechny top-level
 // položky (ať už mají podpoložky, nebo jsou to rovnou stránky) mají stejný
@@ -201,6 +194,13 @@ const pages = existsSync(PAGES)
   : [];
 const sitemap = [];
 
+const pageMetas = pages.map((file) => {
+  const slug = basename(file, '.html');
+  const { meta } = parseFrontMatter(readFileSync(join(PAGES, file), 'utf8'));
+  return { file, slug, meta };
+});
+const MENU = buildMenu(pageMetas);
+
 for (const file of pages) {
   const src = readFileSync(join(PAGES, file), 'utf8');
   const { meta, body } = parseFrontMatter(src);
@@ -231,9 +231,9 @@ for (const file of pages) {
   const galleryDiviznova = slug === 'hole' ? buildGallery('hole/diviznova', 'Diviznová hůl') : '';
   const gallerySvedciSvatby = slug === 'hole' ? buildGallery('hole/svedci-svatby', 'Hole pro svědky svatby') : '';
   const gallerySvedciSvatbyDetail = slug === 'hole' ? buildGallery('hole/svedci-svatby-detail', 'Hole pro svědky svatby') : '';
-  const galleryZla1 = slug === 'hole' ? buildGallery('hole/zla-1', 'Hůl zla s protilólem') : '';
-  const galleryZla2 = slug === 'hole' ? buildGallery('hole/zla-2', 'Hůl zla s protilólem') : '';
-  const galleryZla3 = slug === 'hole' ? buildGallery('hole/zla-3', 'Hůl zla s protilólem') : '';
+  const galleryZla1 = slug === 'hole' ? buildGallery('hole/zla-1', 'Hůl zla s protipólem') : '';
+  const galleryZla2 = slug === 'hole' ? buildGallery('hole/zla-2', 'Hůl zla s protipólem') : '';
+  const galleryZla3 = slug === 'hole' ? buildGallery('hole/zla-3', 'Hůl zla s protipólem') : '';
   const vars = { ...defaults, ...meta, gallery, poem, galleryPlatebniChoros, galleryMagnetickyChoros, galleryDiviznova, gallerySvedciSvatby, gallerySvedciSvatbyDetail, galleryZla1, galleryZla2, galleryZla3 };
 
   const navHtml = renderMenu(MENU, activeSlug);
@@ -277,6 +277,9 @@ if (existsSync(ASSETS)) {
 for (const f of ['404.html', 'favicon.ico', 'robots.txt', 'CNAME']) {
   if (existsSync(join(ROOT, f))) copyFileSync(join(ROOT, f), join(DIST, f));
 }
+
+const ADMIN = join(ROOT, 'admin');
+if (existsSync(ADMIN)) cpSync(ADMIN, join(DIST, 'admin'), { recursive: true });
 
 const sitemapXml = `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">

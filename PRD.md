@@ -100,7 +100,7 @@ Zdroj fotek: **chybí složka** — nedodáno.
 Zdroj: `vánoční svícínek/` (1 foto + 1 video) — **hotovo, obsah se neřeší dál**. Foto a video stejně široké pod sebou.
 
 **Hole, 2024–**
-> Tisíce let starý artefakt, který prostupuje všemi kulturami světa. Tři podsekce na jedné stránce: **Diviznová hůl** (vyrobená z divizny velkokvěté, hlava vylitá cínem), **Hole pro svědky svatby** (šest dřevin pro šest svědků), **Hůl zla s protilólem** (pár: zlá hůl z různých nechutných materiálů + hebká javorová).
+> Tisíce let starý artefakt, který prostupuje všemi kulturami světa. Tři podsekce na jedné stránce: **Diviznová hůl** (vyrobená z divizny velkokvěté, hlava vylitá cínem), **Hole pro svědky svatby** (šest dřevin pro šest svědků), **Hůl zla s protipólem** (pár: zlá hůl z různých nechutných materiálů + hebká javorová).
 Zdroj: `zasilka-WR7J7I93ZIG7UHRE/text hole web.pages` + `Archive/` (3 podsložky) — hotovo, nasazeno do `assets/img/hole/`. Další díla v plánu (roubovaná, obytná, z vajglů, alkoholikům, golfová, s power bankou, platební, solární, obchodním centrům, mluvící…) zatím nepublikovat.
 
 **Choroše, 2025–**
@@ -144,6 +144,23 @@ Literární intervence na LED obrazovku v obchodní zóně v Milevsku, říjen�
 - Spuštěno: `_pages/vse-zdarma-hned.html`, zařazeno do `MENU` (Poezie) v `build.js`, bez `noindex`.
 - Text + logo Galerie Výhybka (prolinkované, `assets/img/vse-zdarma-hned/logo/`) + odkaz na jejich FB hotové. Poděkování je až pod fotkami.
 - Galerie: 6 fotek v `assets/img/vse-zdarma-hned/` (`vis-01.jpg`–`vis-06.jpg`). Doplní se fotky z vernisáže 25. 10.
+
+---
+
+## 4b. Redakční systém pro Ondřeje (rozpracováno)
+
+Ondřej chtěl sám upravovat text, nahrávat fotky a **zakládat nové stránky** bez zásahu Kateřiny/Clauda do kódu. Zvoleno **Decap CMS** (git-based, zdarma, žádný vendor lock-in — ukládá přímo do tohoto repa, commit na `main` spustí stávající GitHub Action a nasadí to stejně jako teď).
+
+- `/admin/index.html` + `/admin/config.yml` — hotovo, jedna "folder" kolekce nad `_pages/` (`create: true`), autodetekuje všech 19 stávajících stránek a umí přidat další. Pole: Titulek, Popis, Umístění v menu (výběr Fotografie/Objekty/Poezie/Samostatná), Text v menu, Pořadí v menu, Galerie fotek (název složky), Nahrát fotku do galerie, Obsah stránky (surový HTML kód, widget `code` — bezpečné, nic nepřevádí přes markdown, takže se nerozbijí ruční vícegalerie u Choroší/Holí). Nová stránka má přednastavenou kostru (`<article><div class="intro">...`).
+- **Menu v `build.js` přestavěno na datově řízené**: pořadí skupin (Fotografie/Objekty/Poezie + samostatné položky) zůstává napevno v kódu (designové rozhodnutí), ale KTERÉ stránky v nich jsou a v jakém pořadí se čte z front matteru (`menuGroup`/`menuLabel`/`menuOrder` u každé stránky). Nová stránka založená přes `/admin` se tak sama objeví v menu bez zásahu do `build.js`. Všech 19 stávajících stránek dostalo tato pole doplněná (stejné pořadí jako předtím, ověřeno diffem vygenerovaného menu).
+- Technická pole mimo dosah (`bookPreviewSlug`, `placeholderCount`, `robots`) zůstávají `widget: hidden` — jen se zachovávají, needituje se (náhled PDF knihy a `noindex` jsou pořád na Kateřině/Claudovi).
+- `build.js` upraveno, aby `admin/` kopírovalo do `docs/admin/` při buildu.
+- **Zbývá, než to půjde použít** (jednorázové, musí udělat Kateřina/Ondřej sami, mimo tenhle terminál):
+  1. Založit GitHub OAuth App (github.com/settings/applications/new) — Homepage URL i Callback URL (`/callback`) budou adresa Cloudflare Workeru z kroku 2.
+  2. Nasadit OAuth proxy `sterlingwes/decap-proxy` na Cloudflare Workers (zdarma): `wrangler login`, `wrangler secret put GITHUB_OAUTH_ID`, `wrangler secret put GITHUB_OAUTH_SECRET`, `wrangler deploy`. Připraveno v `~/GitHub/ondrapelikan-cms-auth/` (`wrangler.toml` s názvem `ondrapelikan-cms-auth`), stačí spustit příkazy výš přímo tam.
+  3. V `admin/config.yml` nahradit `base_url: https://REPLACE-WITH-WORKER-URL` skutečnou adresou workeru.
+  4. Commit + push.
+- Galerie fotek: `media_folder`/`public_folder` nastaveno na `assets/img` — Decap by měl umět procházet podsložky (`assets/img/<slug>/`) přímo v nahrávacím okně. Pokud by procházení nešlo, fallback je nahrát fotku přes GitHub web UI do správné podsložky — `build.js` ji při dalším buildu automaticky zařadí do galerie (galerie se generují ze seznamu souborů ve složce, ne z nějakého ručního seznamu). U nové stránky musí Ondřej do pole "Galerie fotek" napsat název složky sám (a shoduje se s adresou stránky).
 
 ---
 

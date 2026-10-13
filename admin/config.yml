@@ -1,0 +1,70 @@
+backend:
+  name: github
+  repo: koci-sabachova/ondrapelikan
+  branch: main
+  base_url: https://ondrapelikan-cms-auth.koci-sabachova.workers.dev
+  auth_endpoint: /auth
+
+# Prohlížeč/nahrávátko médií — otevře se u každého pole typu "image" a dá
+# se v něm proklikat do podsložky assets/img/<slug>/, kam patří fotky dané
+# stránky (viz "gallerySlug" v build.js). Pokud by se podsložky nedaly
+# procházet, nahraj fotku rovnou přes GitHub web (Add file → Upload files).
+media_folder: "assets/img"
+public_folder: "/assets/img"
+
+collections:
+  - name: "pages"
+    label: "Stránky"
+    folder: "_pages"
+    extension: "html"
+    format: "frontmatter"
+    frontmatter_delimiter: ["<!--meta", "-->"]
+    create: true
+    slug: "{{slug}}"
+    fields:
+      - { label: "Titulek (v záhlaví prohlížeče)", name: "title", widget: "string" }
+      - { label: "Popis (SEO)", name: "description", widget: "text", required: false }
+      - label: "Umístění v menu"
+        name: "menuGroup"
+        widget: "select"
+        required: false
+        hint: "Kde se stránka objeví v levém menu. Nech prázdné pro skrytou stránku (např. homepage) bez vlastní položky v menu."
+        options:
+          - { label: "Fotografie", value: "fotografie" }
+          - { label: "Objekty", value: "objekty" }
+          - { label: "Poezie", value: "poezie" }
+          - { label: "Samostatná položka (dole pod skupinami)", value: "standalone" }
+      - { label: "Text v menu", name: "menuLabel", widget: "string", required: false, hint: "Např. „Hole, 2024–“. Když necháš prázdné, použije se Titulek." }
+      - { label: "Pořadí v menu (menší číslo = výš)", name: "menuOrder", widget: "number", required: false, default: 9 }
+      - label: "Galerie fotek — název složky"
+        name: "gallerySlug"
+        widget: "string"
+        required: false
+        hint: "Chceš pod text přidat galerii fotek? Napiš sem název složky — malá písmena, bez diakritiky, mezery jako pomlčky (např. 'hole'). Fotky pak nahraj polem níž do stejnojmenné podsložky. Nech prázdné, pokud galerii nechceš."
+      - label: "Nahrát fotku do galerie (dá se zopakovat víckrát)"
+        name: "_photoUpload"
+        widget: "image"
+        required: false
+        media_folder: "/assets/img"
+        public_folder: "/assets/img"
+        hint: "V nahrávacím okně otevři/vytvoř podsložku se stejným názvem jako pole 'Galerie fotek' výš a tam fotku nahraj."
+      - label: "Obsah stránky (HTML)"
+        name: "body"
+        widget: "code"
+        default_language: "html"
+        allow_language_selection: false
+        output_code_only: true
+        default: |
+          <article>
+            <div class="intro">
+              <h1>Název díla</h1>
+              <p>2026</p>
+              <p>Krátký popis díla.</p>
+            </div>
+            <ul class="gallery">
+          {{gallery}}
+            </ul>
+          </article>
+      - { name: "bookPreviewSlug", widget: "hidden", required: false }
+      - { name: "placeholderCount", widget: "hidden", required: false }
+      - { name: "robots", widget: "hidden", required: false }
