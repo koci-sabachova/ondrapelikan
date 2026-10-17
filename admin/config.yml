@@ -49,6 +49,11 @@ collections:
         required: false
         hint: "Každý odstavec jako nová položka — žádné HTML tagy, jen prostý text."
         field: { label: "Odstavec", name: "text", widget: "text" }
+      - label: "Báseň — řádky pod sebou"
+        name: "poemText"
+        widget: "text"
+        required: false
+        hint: "Pro báseň/verše: každý řádek na nový enter, bez prázdných řádků navíc (ty udělají mezeru). Zobrazí se místo/vedle Odstavců, řádky u sebe jako báseň, ne jako samostatné odstavce."
       - label: "Galerie fotek — název složky"
         name: "gallerySlug"
         widget: "string"
@@ -71,6 +76,7 @@ collections:
         hint: "Nech prázdné — stránka se postaví sama z polí výš (Rok, Odstavce, Galerie). Vyplň jen pokud potřebuješ něco, co tahle pole neumí (má to přednost před nimi)."
       - { name: "bookPreviewSlug", widget: "hidden", required: false }
       - { name: "placeholderCount", widget: "hidden", required: false }
+      - { name: "h1Tight", widget: "hidden", required: false }
       - { name: "robots", widget: "hidden", required: false }
 
   - name: "objekty"
@@ -104,6 +110,11 @@ collections:
         required: false
         hint: "Každý odstavec jako nová položka — žádné HTML tagy, jen prostý text."
         field: { label: "Odstavec", name: "text", widget: "text" }
+      - label: "Báseň — řádky pod sebou"
+        name: "poemText"
+        widget: "text"
+        required: false
+        hint: "Pro báseň/verše: každý řádek na nový enter, bez prázdných řádků navíc (ty udělají mezeru). Zobrazí se místo/vedle Odstavců, řádky u sebe jako báseň, ne jako samostatné odstavce."
       - label: "Galerie fotek — název složky"
         name: "gallerySlug"
         widget: "string"
@@ -126,6 +137,7 @@ collections:
         hint: "Nech prázdné — stránka se postaví sama z polí výš (Rok, Odstavce, Galerie). Vyplň jen pokud potřebuješ něco, co tahle pole neumí (má to přednost před nimi)."
       - { name: "bookPreviewSlug", widget: "hidden", required: false }
       - { name: "placeholderCount", widget: "hidden", required: false }
+      - { name: "h1Tight", widget: "hidden", required: false }
       - { name: "robots", widget: "hidden", required: false }
 
   - name: "poezie"
@@ -159,6 +171,11 @@ collections:
         required: false
         hint: "Každý odstavec jako nová položka — žádné HTML tagy, jen prostý text."
         field: { label: "Odstavec", name: "text", widget: "text" }
+      - label: "Báseň — řádky pod sebou"
+        name: "poemText"
+        widget: "text"
+        required: false
+        hint: "Pro báseň/verše: každý řádek na nový enter, bez prázdných řádků navíc (ty udělají mezeru). Zobrazí se místo/vedle Odstavců, řádky u sebe jako báseň, ne jako samostatné odstavce."
       - label: "Galerie fotek — název složky"
         name: "gallerySlug"
         widget: "string"
@@ -181,6 +198,7 @@ collections:
         hint: "Nech prázdné — stránka se postaví sama z polí výš (Rok, Odstavce, Galerie). Vyplň jen pokud potřebuješ něco, co tahle pole neumí (má to přednost před nimi)."
       - { name: "bookPreviewSlug", widget: "hidden", required: false }
       - { name: "placeholderCount", widget: "hidden", required: false }
+      - { name: "h1Tight", widget: "hidden", required: false }
       - { name: "robots", widget: "hidden", required: false }
 
   - name: "standalone"
@@ -214,6 +232,11 @@ collections:
         required: false
         hint: "Každý odstavec jako nová položka — žádné HTML tagy, jen prostý text."
         field: { label: "Odstavec", name: "text", widget: "text" }
+      - label: "Báseň — řádky pod sebou"
+        name: "poemText"
+        widget: "text"
+        required: false
+        hint: "Pro báseň/verše: každý řádek na nový enter, bez prázdných řádků navíc (ty udělají mezeru). Zobrazí se místo/vedle Odstavců, řádky u sebe jako báseň, ne jako samostatné odstavce."
       - label: "Galerie fotek — název složky"
         name: "gallerySlug"
         widget: "string"
@@ -236,6 +259,7 @@ collections:
         hint: "Nech prázdné — stránka se postaví sama z polí výš (Rok, Odstavce, Galerie). Vyplň jen pokud potřebuješ něco, co tahle pole neumí (má to přednost před nimi)."
       - { name: "bookPreviewSlug", widget: "hidden", required: false }
       - { name: "placeholderCount", widget: "hidden", required: false }
+      - { name: "h1Tight", widget: "hidden", required: false }
       - { name: "robots", widget: "hidden", required: false }
 
   - name: "homepage"
@@ -256,4 +280,5 @@ collections:
             hint: "Úvodní stránka má vlastní ruční HTML (ne pole Rok/Odstavce/Galerie jako ostatní stránky)."
           - { name: "bookPreviewSlug", widget: "hidden", required: false }
           - { name: "placeholderCount", widget: "hidden", required: false }
+      - { name: "h1Tight", widget: "hidden", required: false }
           - { name: "robots", widget: "hidden", required: false }

@@ -74,13 +74,20 @@ function parseFrontMatter(src) {
 // má přednost a tahle funkce se nepoužije (viz volání níž).
 function renderSimpleBody(meta) {
   const paragraphs = (meta.paragraphs || []).filter(Boolean);
-  const introLines = [`    <h1>${meta.title || ''}</h1>`];
+  const h1Class = meta.h1Tight ? ' class="h1-tight"' : '';
+  const introLines = [`    <h1${h1Class}>${meta.title || ''}</h1>`];
   if (meta.year) introLines.push(`    <p>${meta.year}</p>`);
   for (const p of paragraphs) introLines.push(`    <p>${p}</p>`);
+  // Báseň — jeden blok textu z adminu, řádky zůstávají u sebe (<br>), ne
+  // jako oddělené odstavce; prázdný řádek v zadání udělá mezeru navíc
+  // (např. před podpisem autora).
+  const poem = meta.poemText
+    ? `\n  <div class="poem">${meta.poemText.trim().replace(/\r\n/g, '\n').split('\n').map(l => l.trim()).join('<br>\n')}</div>`
+    : '';
   const gallery = meta.gallerySlug
     ? `\n  <ul class="gallery">\n{{gallery}}\n  </ul>`
     : '';
-  return `<article>\n  <div class="intro">\n${introLines.join('\n')}\n  </div>${gallery}\n</article>`;
+  return `<article>\n  <div class="intro">\n${introLines.join('\n')}\n  </div>${poem}${gallery}\n</article>`;
 }
 
 function template(str, vars) {
@@ -168,23 +175,6 @@ function buildPlaceholderGallery(count) {
 // === Texty převzaté ze sesterského repa 13remesel (jediný zdroj pravdy, viz PRD §3) ===
 const SISTER_REPO = join(ROOT, '..', '13remesel');
 
-function poemFromTrinacteRemeslo() {
-  const path = join(SISTER_REPO, 'texty', '03-trinacte-remeslo.md');
-  if (!existsSync(path)) return '<p class="todo-note">Text se nepodařilo načíst z 13remesel/texty/03-trinacte-remeslo.md.</p>';
-  const raw = readFileSync(path, 'utf8');
-  const marker = '### Tohle musíš udělat co nejdřív';
-  const idx = raw.indexOf(marker);
-  const body = idx >= 0 ? raw.slice(idx + marker.length) : raw;
-  const blocks = body.split(/\n\s*\n/).map(b => b.trim()).filter(Boolean);
-  // Poslední blok je podpis autora — necháme ho zvlášť, zbytek jsou řádky
-  // básně, na 13Ř sázené "vzdušně" (odstavec od odstavce), tady radši
-  // v jednom bloku s <br> — jednoduché, těsné řádkování.
-  const signature = blocks.pop();
-  const lines = blocks.map(b => b.replace(/\*(.+?)\*/g, '<em>$1</em>')).join('<br>\n');
-  const signatureHtml = signature ? `<p>${signature.replace(/\*(.+?)\*/g, '<em>$1</em>')}</p>` : '';
-  return `<p>${lines}</p>\n${signatureHtml}`;
-}
-
 function poemLezTady() {
   const path = join(SISTER_REPO, '_pages', 'svatba.html');
   if (!existsSync(path)) return '<p class="todo-note">Text se nepodařilo načíst z 13remesel/_pages/svatba.html.</p>';
@@ -234,9 +224,7 @@ for (const file of pages) {
     : meta.gallerySlug
     ? (buildGallery(meta.gallerySlug, meta.title || '') || buildPlaceholderGallery(galleryCount || 6))
     : '';
-  const poem = slug === 'tohle-musis-udelat-co-nejdriv' ? poemFromTrinacteRemeslo()
-    : slug === 'matko-dej-mi-chlast' ? poemLezTady()
-    : '';
+  const poem = slug === 'matko-dej-mi-chlast' ? poemLezTady() : '';
   // Choroše: tři podsekce (platební/magnetický/betonový), každá s vlastní galerií
   const galleryPlatebniChoros = slug === 'chorose' ? buildGallery('chorose/platebni', 'Platební choroš') : '';
   const galleryMagnetickyChoros = slug === 'chorose' ? buildGallery('chorose/magneticky', 'Magnetický choroš') : '';
@@ -251,7 +239,8 @@ for (const file of pages) {
   // Stránky vyplněné přes /admin jako "jednoduché" (titulek/rok/odstavce
   // místo ručního HTML) nemají vlastní tělo — postaví se z front matteru.
   // Ruční HTML v souboru (bespoke stránky) má vždy přednost.
-  const effectiveBody = (!body.trim() && meta.paragraphs && meta.paragraphs.length)
+  const hasSimpleContent = (meta.paragraphs && meta.paragraphs.length) || meta.poemText;
+  const effectiveBody = (!body.trim() && hasSimpleContent)
     ? renderSimpleBody(meta)
     : body;
 
