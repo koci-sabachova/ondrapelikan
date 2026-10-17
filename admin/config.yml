@@ -12,10 +12,16 @@ backend:
 media_folder: "assets/img"
 public_folder: "/assets/img"
 
+# Stránky jsou rozdělené do kolekcí podle "menuGroup" (stejné kategorie
+# jako levé menu na webu), aby šly v adminu najít podle rubriky a ne
+# v jedné dlouhé abecedně řazené fronte. Když u stránky změníš "Umístění
+# v menu", po uložení zmizí z téhle kolekce a objeví se v jiné — to je
+# normální, řídí se stejným polem jako menu na webu.
 collections:
-  - name: "pages"
-    label: "Stránky"
+  - name: "fotografie"
+    label: "Fotografie"
     folder: "_pages"
+    filter: { field: "menuGroup", value: "fotografie" }
     extension: "html"
     format: "yaml-frontmatter"
     frontmatter_delimiter: ["<!--meta", "-->"]
@@ -27,8 +33,8 @@ collections:
       - label: "Umístění v menu"
         name: "menuGroup"
         widget: "select"
-        required: false
-        hint: "Kde se stránka objeví v levém menu. Nech prázdné pro skrytou stránku (např. homepage) bez vlastní položky v menu."
+        default: "fotografie"
+        hint: "Kde se stránka objeví v levém menu."
         options:
           - { label: "Fotografie", value: "fotografie" }
           - { label: "Objekty", value: "objekty" }
@@ -66,3 +72,188 @@ collections:
       - { name: "bookPreviewSlug", widget: "hidden", required: false }
       - { name: "placeholderCount", widget: "hidden", required: false }
       - { name: "robots", widget: "hidden", required: false }
+
+  - name: "objekty"
+    label: "Objekty"
+    folder: "_pages"
+    filter: { field: "menuGroup", value: "objekty" }
+    extension: "html"
+    format: "yaml-frontmatter"
+    frontmatter_delimiter: ["<!--meta", "-->"]
+    create: true
+    slug: "{{slug}}"
+    fields:
+      - { label: "Titulek (v záhlaví prohlížeče)", name: "title", widget: "string" }
+      - { label: "Popis (SEO)", name: "description", widget: "text", required: false }
+      - label: "Umístění v menu"
+        name: "menuGroup"
+        widget: "select"
+        default: "objekty"
+        hint: "Kde se stránka objeví v levém menu."
+        options:
+          - { label: "Fotografie", value: "fotografie" }
+          - { label: "Objekty", value: "objekty" }
+          - { label: "Poezie", value: "poezie" }
+          - { label: "Samostatná položka (dole pod skupinami)", value: "standalone" }
+      - { label: "Text v menu", name: "menuLabel", widget: "string", required: false, hint: "Např. „Hole, 2024–“. Když necháš prázdné, použije se Titulek." }
+      - { label: "Pořadí v menu (menší číslo = výš)", name: "menuOrder", widget: "number", required: false, default: 9 }
+      - { label: "Rok", name: "year", widget: "string", required: false, hint: "Např. '2024' nebo '2024–', pokud dílo ještě pokračuje." }
+      - label: "Text — odstavce"
+        name: "paragraphs"
+        widget: "list"
+        required: false
+        hint: "Každý odstavec jako nová položka — žádné HTML tagy, jen prostý text."
+        field: { label: "Odstavec", name: "text", widget: "text" }
+      - label: "Galerie fotek — název složky"
+        name: "gallerySlug"
+        widget: "string"
+        required: false
+        hint: "Chceš pod text přidat galerii fotek? Napiš sem název složky — malá písmena, bez diakritiky, mezery jako pomlčky (např. 'hole'). Fotky pak nahraj polem níž do stejnojmenné podsložky. Nech prázdné, pokud galerii nechceš."
+      - label: "Nahrát fotku do galerie (dá se zopakovat víckrát)"
+        name: "_photoUpload"
+        widget: "image"
+        required: false
+        media_folder: "/assets/img"
+        public_folder: "/assets/img"
+        hint: "V nahrávacím okně otevři/vytvoř podsložku se stejným názvem jako pole 'Galerie fotek' výš a tam fotku nahraj."
+      - label: "Pokročilé — vlastní HTML (jen pro netypické stránky)"
+        name: "body"
+        widget: "code"
+        required: false
+        default_language: "html"
+        allow_language_selection: false
+        output_code_only: true
+        hint: "Nech prázdné — stránka se postaví sama z polí výš (Rok, Odstavce, Galerie). Vyplň jen pokud potřebuješ něco, co tahle pole neumí (má to přednost před nimi)."
+      - { name: "bookPreviewSlug", widget: "hidden", required: false }
+      - { name: "placeholderCount", widget: "hidden", required: false }
+      - { name: "robots", widget: "hidden", required: false }
+
+  - name: "poezie"
+    label: "Poezie"
+    folder: "_pages"
+    filter: { field: "menuGroup", value: "poezie" }
+    extension: "html"
+    format: "yaml-frontmatter"
+    frontmatter_delimiter: ["<!--meta", "-->"]
+    create: true
+    slug: "{{slug}}"
+    fields:
+      - { label: "Titulek (v záhlaví prohlížeče)", name: "title", widget: "string" }
+      - { label: "Popis (SEO)", name: "description", widget: "text", required: false }
+      - label: "Umístění v menu"
+        name: "menuGroup"
+        widget: "select"
+        default: "poezie"
+        hint: "Kde se stránka objeví v levém menu."
+        options:
+          - { label: "Fotografie", value: "fotografie" }
+          - { label: "Objekty", value: "objekty" }
+          - { label: "Poezie", value: "poezie" }
+          - { label: "Samostatná položka (dole pod skupinami)", value: "standalone" }
+      - { label: "Text v menu", name: "menuLabel", widget: "string", required: false, hint: "Např. „Hole, 2024–“. Když necháš prázdné, použije se Titulek." }
+      - { label: "Pořadí v menu (menší číslo = výš)", name: "menuOrder", widget: "number", required: false, default: 9 }
+      - { label: "Rok", name: "year", widget: "string", required: false, hint: "Např. '2024' nebo '2024–', pokud dílo ještě pokračuje." }
+      - label: "Text — odstavce"
+        name: "paragraphs"
+        widget: "list"
+        required: false
+        hint: "Každý odstavec jako nová položka — žádné HTML tagy, jen prostý text."
+        field: { label: "Odstavec", name: "text", widget: "text" }
+      - label: "Galerie fotek — název složky"
+        name: "gallerySlug"
+        widget: "string"
+        required: false
+        hint: "Chceš pod text přidat galerii fotek? Napiš sem název složky — malá písmena, bez diakritiky, mezery jako pomlčky (např. 'hole'). Fotky pak nahraj polem níž do stejnojmenné podsložky. Nech prázdné, pokud galerii nechceš."
+      - label: "Nahrát fotku do galerie (dá se zopakovat víckrát)"
+        name: "_photoUpload"
+        widget: "image"
+        required: false
+        media_folder: "/assets/img"
+        public_folder: "/assets/img"
+        hint: "V nahrávacím okně otevři/vytvoř podsložku se stejným názvem jako pole 'Galerie fotek' výš a tam fotku nahraj."
+      - label: "Pokročilé — vlastní HTML (jen pro netypické stránky)"
+        name: "body"
+        widget: "code"
+        required: false
+        default_language: "html"
+        allow_language_selection: false
+        output_code_only: true
+        hint: "Nech prázdné — stránka se postaví sama z polí výš (Rok, Odstavce, Galerie). Vyplň jen pokud potřebuješ něco, co tahle pole neumí (má to přednost před nimi)."
+      - { name: "bookPreviewSlug", widget: "hidden", required: false }
+      - { name: "placeholderCount", widget: "hidden", required: false }
+      - { name: "robots", widget: "hidden", required: false }
+
+  - name: "standalone"
+    label: "Samostatné stránky"
+    folder: "_pages"
+    filter: { field: "menuGroup", value: "standalone" }
+    extension: "html"
+    format: "yaml-frontmatter"
+    frontmatter_delimiter: ["<!--meta", "-->"]
+    create: true
+    slug: "{{slug}}"
+    fields:
+      - { label: "Titulek (v záhlaví prohlížeče)", name: "title", widget: "string" }
+      - { label: "Popis (SEO)", name: "description", widget: "text", required: false }
+      - label: "Umístění v menu"
+        name: "menuGroup"
+        widget: "select"
+        default: "standalone"
+        hint: "Kde se stránka objeví v levém menu."
+        options:
+          - { label: "Fotografie", value: "fotografie" }
+          - { label: "Objekty", value: "objekty" }
+          - { label: "Poezie", value: "poezie" }
+          - { label: "Samostatná položka (dole pod skupinami)", value: "standalone" }
+      - { label: "Text v menu", name: "menuLabel", widget: "string", required: false, hint: "Např. „Hole, 2024–“. Když necháš prázdné, použije se Titulek." }
+      - { label: "Pořadí v menu (menší číslo = výš)", name: "menuOrder", widget: "number", required: false, default: 9 }
+      - { label: "Rok", name: "year", widget: "string", required: false, hint: "Např. '2024' nebo '2024–', pokud dílo ještě pokračuje." }
+      - label: "Text — odstavce"
+        name: "paragraphs"
+        widget: "list"
+        required: false
+        hint: "Každý odstavec jako nová položka — žádné HTML tagy, jen prostý text."
+        field: { label: "Odstavec", name: "text", widget: "text" }
+      - label: "Galerie fotek — název složky"
+        name: "gallerySlug"
+        widget: "string"
+        required: false
+        hint: "Chceš pod text přidat galerii fotek? Napiš sem název složky — malá písmena, bez diakritiky, mezery jako pomlčky (např. 'hole'). Fotky pak nahraj polem níž do stejnojmenné podsložky. Nech prázdné, pokud galerii nechceš."
+      - label: "Nahrát fotku do galerie (dá se zopakovat víckrát)"
+        name: "_photoUpload"
+        widget: "image"
+        required: false
+        media_folder: "/assets/img"
+        public_folder: "/assets/img"
+        hint: "V nahrávacím okně otevři/vytvoř podsložku se stejným názvem jako pole 'Galerie fotek' výš a tam fotku nahraj."
+      - label: "Pokročilé — vlastní HTML (jen pro netypické stránky)"
+        name: "body"
+        widget: "code"
+        required: false
+        default_language: "html"
+        allow_language_selection: false
+        output_code_only: true
+        hint: "Nech prázdné — stránka se postaví sama z polí výš (Rok, Odstavce, Galerie). Vyplň jen pokud potřebuješ něco, co tahle pole neumí (má to přednost před nimi)."
+      - { name: "bookPreviewSlug", widget: "hidden", required: false }
+      - { name: "placeholderCount", widget: "hidden", required: false }
+      - { name: "robots", widget: "hidden", required: false }
+
+  - name: "homepage"
+    label: "Úvodní stránka"
+    files:
+      - name: "index"
+        label: "Úvodní stránka (/)"
+        file: "_pages/index.html"
+        fields:
+          - { label: "Titulek (v záhlaví prohlížeče)", name: "title", widget: "string" }
+          - { label: "Popis (SEO)", name: "description", widget: "text", required: false }
+          - label: "Vlastní HTML"
+            name: "body"
+            widget: "code"
+            default_language: "html"
+            allow_language_selection: false
+            output_code_only: true
+            hint: "Úvodní stránka má vlastní ruční HTML (ne pole Rok/Odstavce/Galerie jako ostatní stránky)."
+          - { name: "bookPreviewSlug", widget: "hidden", required: false }
+          - { name: "placeholderCount", widget: "hidden", required: false }
+          - { name: "robots", widget: "hidden", required: false }
