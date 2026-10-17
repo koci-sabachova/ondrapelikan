@@ -239,6 +239,11 @@ main h1 { margin-bottom: var(--space-6); }
 .gallery--uncropped .gallery__item img {
   aspect-ratio: auto;
   object-fit: contain;
+  border: 1px solid var(--color-rule);
+}
+.gallery--uncropped .gallery__item:hover img,
+.gallery--uncropped .gallery__item:focus-visible img {
+  transform: none;
 }
 .gallery__item--placeholder {
   aspect-ratio: 4 / 3;
