@@ -183,7 +183,7 @@ Stejně jako `13remesel`: vanilla HTML/CSS/JS, žádný framework, žádné záv
 - `npm run serve` → lokální náhled (pozor na kolizi portu 8000 s `13remesel` — používat jiný port, např. 8001)
 - Skutečné fotky nasazené: Až jelen s laní útes slaní (102), Moje první auto (29), Betonové chleby (11 — nevytříděno)
 - Placeholdery: Vodňanské kuře, Třináct řemesel (titulní foto)
-- Texty **Matko dej mi chlast** (báseň *Lež tady*) a **Tohle musíš udělat co nejdřív** se v `build.js` natahují přímo ze souborů v `13remesel` (`texty/03-trinacte-remeslo.md`, `_pages/svatba.html`) — jediný zdroj pravdy, žádné ruční kopírování. Pozor: build ondrapelikan.cz proto závisí na tom, že repo `13remesel` leží vedle (`../13remesel`).
+- Texty **Matko dej mi chlast** (báseň *Lež tady*) a **Tohle musíš udělat co nejdřív** původně natahované přímo ze souborů v `13remesel` — od 2026-10 přesunuté do vlastního front matteru (`meta.poemText`/`meta.poemTitle`), editovatelné přes `/admin`. Build `ondrapelikan.cz` už na `13remesel` nezávisí.
 - Videa zkomprimovaná (ffmpeg, H.264/AAC, `-movflags +faststart`): `zvuk a performance.mov` 68→15 MB, `IMG_5951.mov` 158→26 MB (škálováno na 1280 px šířky), `vanocni-svicinek` 66→13 MB. Originální `.mov` v `assets/` nahrazeny `.mp4`, zdrojové soubory v kořeni projektu nedotčené.
 - Blok o předprodeji knihy **Ministerstvo hub** na Donio (text + `<iframe>` widget, `donio.cz/widget2/41628`) je na stránce `/ministerstvo-hub/`, nad galerií. Homepage má jen titulní fotku.
 - **Vše zdarma hned!** spuštěno na `/vse-zdarma-hned/` v menu (Poezie), 6 fotek nasazeno.

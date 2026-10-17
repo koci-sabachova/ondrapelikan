@@ -17,6 +17,7 @@
       var title = data.get('title');
       var year = data.get('year');
       var paragraphs = data.get('paragraphs');
+      var poemTitle = data.get('poemTitle');
       var poemText = data.get('poemText');
       var gallerySlug = data.get('gallerySlug');
       var body = data.get('body');
@@ -29,6 +30,7 @@
         });
       }
       if (poemText) {
+        if (poemTitle) children.push(h('p', { key: 'poemTitle' }, h('strong', {}, poemTitle)));
         children.push(h('div', { key: 'poem', style: { whiteSpace: 'pre-line' } }, poemText));
       }
       if (body) {

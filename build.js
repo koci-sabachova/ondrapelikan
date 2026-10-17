@@ -67,6 +67,20 @@ function parseFrontMatter(src) {
   return { meta, body: src.slice(m[0].length) };
 }
 
+// Báseň z adminu (meta.poemText, jeden blok textu) → HTML. Prázdný řádek
+// odděluje sloky (každá jako vlastní <p>, zachovává mezeru mezi nimi),
+// jednotlivé řádky uvnitř sloky jdou přes <br> těsně u sebe. Volitelný
+// meta.poemTitle (např. "Lež tady" u Matko dej mi chlast) se vykreslí jako
+// tučný podnadpis stejným stylem jako u víc-básňových stránek (.poem-title).
+function poemTextToHtml(meta) {
+  if (!meta.poemText) return '';
+  const titleHtml = meta.poemTitle ? `<p class="poem-title"><strong>${meta.poemTitle}</strong></p>\n` : '';
+  const stanzas = meta.poemText.trim().replace(/\r\n/g, '\n').split(/\n\s*\n/)
+    .map((s) => s.split('\n').map((l) => l.trim()).filter(Boolean).join('<br>\n'))
+    .filter(Boolean);
+  return titleHtml + stanzas.map((s) => `<p>${s}</p>`).join('\n');
+}
+
 // Pro "jednoduché" stránky (titulek + rok + odstavce textu + volitelná
 // galerie fotek) z /admin CMS — Ondřej vyplní pole bez HTML, tahle funkce
 // z nich postaví stejné markup jako ruční stránky. Pokud stránka obsahuje
@@ -78,12 +92,8 @@ function renderSimpleBody(meta) {
   const introLines = [`    <h1${h1Class}>${meta.title || ''}</h1>`];
   if (meta.year) introLines.push(`    <p>${meta.year}</p>`);
   for (const p of paragraphs) introLines.push(`    <p>${p}</p>`);
-  // Báseň — jeden blok textu z adminu, řádky zůstávají u sebe (<br>), ne
-  // jako oddělené odstavce; prázdný řádek v zadání udělá mezeru navíc
-  // (např. před podpisem autora).
-  const poem = meta.poemText
-    ? `\n  <div class="poem">${meta.poemText.trim().replace(/\r\n/g, '\n').split('\n').map(l => l.trim()).join('<br>\n')}</div>`
-    : '';
+  const poemHtml = poemTextToHtml(meta);
+  const poem = poemHtml ? `\n  <div class="poem">${poemHtml}</div>` : '';
   const gallery = meta.gallerySlug
     ? `\n  <ul class="gallery">\n{{gallery}}\n  </ul>`
     : '';
@@ -172,19 +182,6 @@ function buildPlaceholderGallery(count) {
   ).join('\n');
 }
 
-// === Texty převzaté ze sesterského repa 13remesel (jediný zdroj pravdy, viz PRD §3) ===
-const SISTER_REPO = join(ROOT, '..', '13remesel');
-
-function poemLezTady() {
-  const path = join(SISTER_REPO, '_pages', 'svatba.html');
-  if (!existsSync(path)) return '<p class="todo-note">Text se nepodařilo načíst z 13remesel/_pages/svatba.html.</p>';
-  const raw = readFileSync(path, 'utf8');
-  const start = raw.indexOf('<p class="wedding__poem-title">');
-  const end = raw.indexOf('<figure class="wedding__poem-photo">');
-  if (start < 0 || end < 0) return '<p class="todo-note">Báseň se v 13remesel/_pages/svatba.html nepodařilo najít.</p>';
-  return raw.slice(start, end).trim();
-}
-
 if (existsSync(DIST)) rmSync(DIST, { recursive: true, force: true });
 mkdirSync(DIST, { recursive: true });
 
@@ -224,7 +221,7 @@ for (const file of pages) {
     : meta.gallerySlug
     ? (buildGallery(meta.gallerySlug, meta.title || '') || buildPlaceholderGallery(galleryCount || 6))
     : '';
-  const poem = slug === 'matko-dej-mi-chlast' ? poemLezTady() : '';
+  const poem = poemTextToHtml(meta);
   // Choroše: tři podsekce (platební/magnetický/betonový), každá s vlastní galerií
   const galleryPlatebniChoros = slug === 'chorose' ? buildGallery('chorose/platebni', 'Platební choroš') : '';
   const galleryMagnetickyChoros = slug === 'chorose' ? buildGallery('chorose/magneticky', 'Magnetický choroš') : '';

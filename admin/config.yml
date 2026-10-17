@@ -49,11 +49,16 @@ collections:
         required: false
         hint: "Každý odstavec jako nová položka — žádné HTML tagy, jen prostý text."
         field: { label: "Odstavec", name: "text", widget: "text" }
+      - label: "Podnázev básně (nepovinné)"
+        name: "poemTitle"
+        widget: "string"
+        required: false
+        hint: "Jen pokud má báseň svůj vlastní název odlišný od titulku stránky nahoře (např. u „Matko dej mi chlast“ je to „Lež tady“). Vykreslí se tučně nad veršema."
       - label: "Báseň — řádky pod sebou"
         name: "poemText"
         widget: "text"
         required: false
-        hint: "Pro báseň/verše: každý řádek na nový enter, bez prázdných řádků navíc (ty udělají mezeru). Zobrazí se místo/vedle Odstavců, řádky u sebe jako báseň, ne jako samostatné odstavce."
+        hint: "Každý verš na nový enter. Prázdný řádek odděluje sloky (udělá mezi nimi mezeru) — v rámci jedné sloky žádné prázdné řádky nedávej."
       - label: "Galerie fotek — název složky"
         name: "gallerySlug"
         widget: "string"
@@ -110,11 +115,16 @@ collections:
         required: false
         hint: "Každý odstavec jako nová položka — žádné HTML tagy, jen prostý text."
         field: { label: "Odstavec", name: "text", widget: "text" }
+      - label: "Podnázev básně (nepovinné)"
+        name: "poemTitle"
+        widget: "string"
+        required: false
+        hint: "Jen pokud má báseň svůj vlastní název odlišný od titulku stránky nahoře (např. u „Matko dej mi chlast“ je to „Lež tady“). Vykreslí se tučně nad veršema."
       - label: "Báseň — řádky pod sebou"
         name: "poemText"
         widget: "text"
         required: false
-        hint: "Pro báseň/verše: každý řádek na nový enter, bez prázdných řádků navíc (ty udělají mezeru). Zobrazí se místo/vedle Odstavců, řádky u sebe jako báseň, ne jako samostatné odstavce."
+        hint: "Každý verš na nový enter. Prázdný řádek odděluje sloky (udělá mezi nimi mezeru) — v rámci jedné sloky žádné prázdné řádky nedávej."
       - label: "Galerie fotek — název složky"
         name: "gallerySlug"
         widget: "string"
@@ -171,11 +181,16 @@ collections:
         required: false
         hint: "Každý odstavec jako nová položka — žádné HTML tagy, jen prostý text."
         field: { label: "Odstavec", name: "text", widget: "text" }
+      - label: "Podnázev básně (nepovinné)"
+        name: "poemTitle"
+        widget: "string"
+        required: false
+        hint: "Jen pokud má báseň svůj vlastní název odlišný od titulku stránky nahoře (např. u „Matko dej mi chlast“ je to „Lež tady“). Vykreslí se tučně nad veršema."
       - label: "Báseň — řádky pod sebou"
         name: "poemText"
         widget: "text"
         required: false
-        hint: "Pro báseň/verše: každý řádek na nový enter, bez prázdných řádků navíc (ty udělají mezeru). Zobrazí se místo/vedle Odstavců, řádky u sebe jako báseň, ne jako samostatné odstavce."
+        hint: "Každý verš na nový enter. Prázdný řádek odděluje sloky (udělá mezi nimi mezeru) — v rámci jedné sloky žádné prázdné řádky nedávej."
       - label: "Galerie fotek — název složky"
         name: "gallerySlug"
         widget: "string"
@@ -232,11 +247,16 @@ collections:
         required: false
         hint: "Každý odstavec jako nová položka — žádné HTML tagy, jen prostý text."
         field: { label: "Odstavec", name: "text", widget: "text" }
+      - label: "Podnázev básně (nepovinné)"
+        name: "poemTitle"
+        widget: "string"
+        required: false
+        hint: "Jen pokud má báseň svůj vlastní název odlišný od titulku stránky nahoře (např. u „Matko dej mi chlast“ je to „Lež tady“). Vykreslí se tučně nad veršema."
       - label: "Báseň — řádky pod sebou"
         name: "poemText"
         widget: "text"
         required: false
-        hint: "Pro báseň/verše: každý řádek na nový enter, bez prázdných řádků navíc (ty udělají mezeru). Zobrazí se místo/vedle Odstavců, řádky u sebe jako báseň, ne jako samostatné odstavce."
+        hint: "Každý verš na nový enter. Prázdný řádek odděluje sloky (udělá mezi nimi mezeru) — v rámci jedné sloky žádné prázdné řádky nedávej."
       - label: "Galerie fotek — název složky"
         name: "gallerySlug"
         widget: "string"
