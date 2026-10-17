@@ -8,5 +8,38 @@
 </head>
 <body>
 <script src="https://unpkg.com/decap-cms@^3.0.0/dist/decap-cms.js"></script>
+<script>
+  // Vlastní náhled vpravo — vykreslí pole jako čitelný text/HTML místo
+  // syrového dumpu polí, co by jinak Decap ukázal defaultně.
+  var PagePreview = createClass({
+    render: function () {
+      var data = this.props.entry.get('data');
+      var title = data.get('title');
+      var year = data.get('year');
+      var paragraphs = data.get('paragraphs');
+      var gallerySlug = data.get('gallerySlug');
+      var body = data.get('body');
+
+      var children = [h('h1', { key: 'title' }, title)];
+      if (year) children.push(h('p', { key: 'year' }, year));
+      if (paragraphs) {
+        paragraphs.forEach(function (p, i) {
+          children.push(h('p', { key: 'p' + i }, p.get('text')));
+        });
+      }
+      if (body) {
+        children.push(h('div', { key: 'body', dangerouslySetInnerHTML: { __html: body } }));
+      }
+      if (gallerySlug) {
+        children.push(h('p', { key: 'gallery', style: { color: '#888', fontStyle: 'italic' } }, 'Galerie fotek (v náhledu se nezobrazí): ' + gallerySlug));
+      }
+      return h('div', { style: { padding: '2rem', maxWidth: '40rem', margin: '0 auto', fontFamily: 'sans-serif', lineHeight: 1.6 } }, children);
+    }
+  });
+  ['fotografie', 'objekty', 'poezie', 'standalone', 'homepage'].forEach(function (name) {
+    CMS.registerPreviewTemplate(name, PagePreview);
+  });
+  CMS.registerPreviewStyle('/assets/css/style.css');
+</script>
 </body>
 </html>
