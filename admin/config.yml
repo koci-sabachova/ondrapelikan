@@ -300,5 +300,5 @@ collections:
             hint: "Úvodní stránka má vlastní ruční HTML (ne pole Rok/Odstavce/Galerie jako ostatní stránky)."
           - { name: "bookPreviewSlug", widget: "hidden", required: false }
           - { name: "placeholderCount", widget: "hidden", required: false }
-      - { name: "h1Tight", widget: "hidden", required: false }
+          - { name: "h1Tight", widget: "hidden", required: false }
           - { name: "robots", widget: "hidden", required: false }
